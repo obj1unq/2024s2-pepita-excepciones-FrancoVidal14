@@ -1,0 +1,21 @@
+import pepita.*
+
+describe "Test pepita" {
+  test "volar 4 kms" {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    milena.movilizarTodasSusAves(4)
+    assert.equals(86, pepita.energia())
+    assert.equals(2, pepon.energia())
+  }
+  test "volar 6 kms" {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.throwsException({milena.movilizarTodasSusAves(6)})
+  }
+  test "volar 100 kms" {
+    milena.agregarAve(pepita)
+    milena.agregarAve(pepon)
+    assert.throwsException({milena.movilizarTodasSusAves(100)})
+  }
+}
