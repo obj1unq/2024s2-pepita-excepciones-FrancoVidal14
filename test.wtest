@@ -4,7 +4,9 @@ describe "Test pepita" {
   test "volar 4 kms" {
     milena.agregarAve(pepita)
     milena.agregarAve(pepon)
-    assert.that(milena.puedeMovilizarTodasSusAves(4))
+    milena.movilizarTodasSusAves(4)
+    assert.equals(86, pepita.energia())
+    assert.equals(2, pepon.energia())
   }
   test "volar 6 kms" {
     milena.agregarAve(pepita)
@@ -14,6 +16,6 @@ describe "Test pepita" {
   test "volar 100 kms" {
     milena.agregarAve(pepita)
     milena.agregarAve(pepon)
-    assert.throwsException({ milena.movilizarTodasSusAves(100)})
+    assert.throwsException({milena.movilizarTodasSusAves(100)})
   }
 }

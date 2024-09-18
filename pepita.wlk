@@ -1,32 +1,35 @@
 object pepita {
 	var energia = 100
 	
+	method validarVuelo(distancia) {
+		if (self.energiaQueGastaVolando(distancia) > energia) self.error(
+				(("La energia " + energia) + " no es suficiente para volar ") + distancia
+			)
+	}
+	
+	method energiaQueGastaVolando(distancia) = 10 + distancia
+	
 	method comer(comida) {
-		energia = energia + comida.energiaQueAporta()
+		energia += comida.energiaQueAporta()
 	}
 	
 	method volar(distancia) {
-		energia = energia - 10 - distancia
+		self.validarVuelo(distancia)
+		energia -= self.energiaQueGastaVolando(distancia)
 	}
-		
-	method energia() {
-		return energia
-	}
+	
+	method energia() = energia
 }
 
 object alpiste {
-	method energiaQueAporta() {
-		return 20
-	}
+	method energiaQueAporta() = 20
 }
 
 object manzana {
 	var madurez = 1
 	const base = 5
 	
-	method madurez() {
-		return madurez
-	}
+	method madurez() = madurez
 	
 	method madurez(_madurez) {
 		madurez = _madurez
@@ -36,32 +39,35 @@ object manzana {
 		self.madurez(madurez + 1)
 	}
 	
-	method energiaQueAporta() {
-		return base * madurez
-	}
-	
+	method energiaQueAporta() = base * madurez
 }
 
 object pepon {
 	var energia = 30
 	
-	method energia() {
-		return energia
-	}
-		
-	method comer(comida) {
-		energia += energia + comida.energiaQueAporta() / 2
-	}
-		
-	method volar(distancia) {
-		energia = energia - 20 - 2*distancia
+	method energia() = energia
+	
+	method validarVuelo(distancia) {
+		if (self.energiaQueGastaVolando(distancia) > energia) self.error(
+				(("La energia " + energia) + " no es suficiente para volar ") + distancia
+			)
 	}
 	
+	method energiaQueGastaVolando(distancia) = 20 + (2 * distancia)
+	
+	method comer(comida) {
+		energia += energia + (comida.energiaQueAporta() / 2)
+	}
+	
+	method volar(distancia) {
+		self.validarVuelo(distancia)
+		energia -= self.energiaQueGastaVolando(distancia)
+	}
 }
 
 object roque {
 	var ave = pepita
-	var cenas = 0;
+	var cenas = 0
 	
 	method ave(_ave) {
 		ave = _ave
@@ -70,15 +76,18 @@ object roque {
 	
 	method alimentar(alimento) {
 		ave.comer(alimento)
-		cenas = cenas + 1
+		cenas += 1
 	}
 }
 
-
-object milena{
+object milena {
 	const aves = #{}
-
-	method agregarAve(ave){
+	
+	method agregarAve(ave) {
 		aves.add(ave)
+	}
+	
+	method movilizarTodasSusAves(distancia) {
+		aves.forEach({ ave => ave.volar(distancia) })
 	}
 }
