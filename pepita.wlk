@@ -74,3 +74,11 @@ object roque {
 	}
 }
 
+
+object milena{
+	const aves = #{}
+
+	method agregarAve(ave){
+		aves.add(ave)
+	}
+}
