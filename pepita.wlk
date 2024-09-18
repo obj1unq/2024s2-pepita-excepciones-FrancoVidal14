@@ -18,6 +18,10 @@ object pepita {
 		energia -= self.energiaQueGastaVolando(distancia)
 	}
 	
+	method puedeVolar(distancia){
+		return self.energiaQueGastaVolando(distancia) < energia
+	}
+
 	method energia() = energia
 }
 
@@ -63,6 +67,10 @@ object pepon {
 		self.validarVuelo(distancia)
 		energia -= self.energiaQueGastaVolando(distancia)
 	}
+
+	method puedeVolar(distancia){
+		return self.energiaQueGastaVolando(distancia) < energia
+	}
 }
 
 object roque {
@@ -88,6 +96,10 @@ object milena {
 	}
 	
 	method movilizarTodasSusAves(distancia) {
-		aves.forEach({ ave => ave.volar(distancia) })
+		if(not aves.all({ave => ave.puedeVolar(distancia)})){
+			self.error("No puede movilizar todas sus aves")
+		}
+		aves.forEach({ ave => 
+		ave.volar(distancia) })
 	}
 }
